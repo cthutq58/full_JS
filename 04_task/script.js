@@ -6,7 +6,10 @@ function start() {
   while (isNaN(money) || money == "" || money == null) {
     money = +prompt("Ваш бюджет на месяц?", "50000");
   }
-  time = prompt("Введите дату в формате YYYY-MM-DD", Date.now());
+
+//   let d = new Date(Date.now()).toISOString().slice(0, 10);
+  let d = new Date(Date.now()).toISOString().match(/\d{4}-\d{2}-\d{2}/g);
+  time = prompt("Введите дату в ISO-формате YYYY-MM-DD", d);
 }
 start();
 
@@ -15,7 +18,7 @@ let appData = {
   timeData: time,
   fixExpenses: {},
   optionalExpenses: {},
-  sideIncome: [],
+  income: [],
   savings: false,
   chooseFixExpenses: function () {
     for (let i = 1; i < 3; i++) {
@@ -42,12 +45,12 @@ let appData = {
     } else if (appData.moneyPerDay >= 2000) {
       console.log("Высокий уровень достатка");
     } else {
-      console.log("WTH?");
+      console.log("Опаньки...!");
     }
   },
   checkSavings: function () {
-    if (appData.savings || (appData.savings = confirm("Имеете вложения?"))) {
-      let save = +prompt("Какова сумма вложений?", 1000000),
+    if (appData.savings || (appData.savings = confirm("Имеете вклады?"))) {
+      let save = +prompt("Какова сумма вкладов?", 1000000),
         procent = +prompt("Под какой процент?", 12);
 
       appData.monthIncome = (save / 100 / 12 * procent).toFixed(1);
@@ -67,17 +70,18 @@ let appData = {
       }
     }
   },
-  chooseSideIncome: function () {
+  chooseIncome: function () {
     let items = '';
     while (typeof (items) !== 'string' || items == '' || typeof (items) === null) {
       items = prompt("Что принесет доп.заработок? (перечислите через ', ')", '');
     }
-    appData.sideIncome = items.split(", ");
-    appData.sideIncome.push(prompt("Может, что-то ещё?", ""));
-    appData.sideIncome.sort();
-    console.log(appData.sideIncome);
+    appData.income = items.split(", ");
+    appData.income.push(prompt("Может, что-то ещё?", ""));
+    appData.income.sort();
+    console.log(appData.income);
     alert("Cпособы доп.заработка: \n");
-    appData.sideIncome.forEach((e, i) => alert((i+1)+"-й: "+ e));
+    appData.income.forEach((item, i) => 
+      alert((i + 1) + "-й способ доп.заработка: " + item));
   }
 };
 
@@ -86,11 +90,9 @@ appData.chooseOptExpenses();
 appData.detectDayBudget();
 appData.detectLevel();
 appData.checkSavings();
-appData.chooseSideIncome(); */
+appData.chooseIncome(); */
 
 console.log("Наша программа включает в себя данные: \n");  
 for (const key in appData) {
   console.log(key);  
 }
-
-
