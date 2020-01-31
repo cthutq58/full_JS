@@ -84,11 +84,40 @@ countBtn.addEventListener('click', function () {
     }
 });
 
-incomeItem.addEventListener('input', function() {
+incomeItem.addEventListener('input', function () {
     let items = incomeItem.value;
     appData.income = items.split(", ");
     incomeValue.textContent = appData.income;
 });
+
+checkSavings.addEventListener('click', () => {
+    appData.savings = !appData.savings;
+    if (appData.savings) {
+        incomeCount();
+    } else {
+        sumValue.value = '';
+        percentValue.value = '';
+        monthSavingsValue.textContent = '';
+        yearSavingsValue.textContent = '';
+    }
+});
+
+function incomeCount() {
+    if (appData.savings) {
+        let sum = +sumValue.value,
+            percent = +percentValue.value;
+        
+        appData.monthIncome = (sum / 100 / 12 * percent).toFixed();
+        appData.yearIncome = (sum / 100 * percent).toFixed();
+
+        monthSavingsValue.textContent = appData.monthIncome;
+        yearSavingsValue.textContent = appData.yearIncome;
+    }
+}
+
+sumValue.addEventListener('input', incomeCount);
+
+percentValue.addEventListener('input', incomeCount);
 
 let appData = {
     budget: money,
@@ -97,36 +126,7 @@ let appData = {
     optionalExpenses: {},
     income: [],
     savings: false,
-    chooseExpenses: () => { },
-    detectDayBudget: () => { },
-    detectLevel: function () {
-
-    },
-    checkSavings: function () {
-        if (appData.savings || (appData.savings = confirm("Имеете вклады?"))) {
-            let save = +prompt("Какова сумма вкладов?", 1000000),
-                procent = +prompt("Под какой процент?", 12);
-
-            appData.monthIncome = (save / 100 / 12 * procent).toFixed(1);
-            alert("Доход в месяц с вложений: " + appData.monthIncome);
-        }
-    },
-    chooseOptExpenses: () => { },
-    chooseIncome: function () {
-/* 
-        appData.income.push(prompt("Может, что-то ещё?", ""));
-        appData.income.sort();
-        console.log(appData.income);
-        alert("Cпособы доп.заработка: \n");
-        appData.income.forEach((item, i) =>
-            alert((i + 1) + "-й способ доп.заработка: " + item)); */
-    }
 };
 
-
-/* console.log("Наша программа включает в себя данные: \n");
-for (const key in appData) {
-    console.log(key);
-} */
 
 
