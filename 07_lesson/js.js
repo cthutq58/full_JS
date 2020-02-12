@@ -22,18 +22,23 @@ let timerID = setTimeout(function log(i = 0, x = 5) {
 });
 
 let btn = document.querySelector('.btn'),
-    box = document.querySelector('.box');
+    box = document.querySelector('.box'),
+    wrapper = document.querySelector('.wrapper');
 
-function myAmimation(msec = 17, cycles = 2) {
-    let posX = 0, posY = 0, size = 300,
+function myAmimation(msec = 10, cycles = 2) {    
+    let sizeBox = +getComputedStyle(box).width.slice(0,-2),
+    sizeWrapper = +getComputedStyle(wrapper).width.slice(0,-2), 
+    size = sizeWrapper - sizeBox;
+    
+    let posX = 0, posY = 0,
         // start = Date.now();
         cnt = 0;
-
+    
     let timer = setInterval(fnInterval, msec);
 
     function fnInterval(fn = movePerimeter) {
         // let timePassed = Date.now() - start;
-        // if (timePassed > 12000) {
+        // if (timePassed >= 9600) {
         if (++cnt > 4 * size * cycles) {
             clearInterval(timer);
             return;
