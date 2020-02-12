@@ -6,26 +6,40 @@ let sayHi = (i = 1) => console.log(`Hi World ${i}!`);
 let timeID = setTimeout(sayHi, 3000);
 // clearTimeout(timeID);
 
-/* interval setTimeout == setInterval */
+/* interval delay invokee == setInterval */
 let interID = setInterval(sayHi, 3000, 2);
+// clearInterval(interID);
 clearTimeout(interID);
 
 /* recurseve setTimeout */
 let timerID = setTimeout(function log(i = 0, x = 5) {
     console.log(`Hello ${i++}`);
-    if (i > x) return;
+    if (i > x) {
+        clearTimeout(timerID);
+        return;
+    }
     setTimeout(log, 1000, i, x);
 });
 
-let btn = document.querySelector('.btn');
+let btn = document.querySelector('.btn'),
+    box = document.querySelector('.box');
 
 function myAmimation () {
-    let box = document.querySelector('.box');
-    let posX = 0, posY = 0; 
+    let posX = 0, posY = 0,
+        // start = Date.now();
+        cnt = 0;
 
-    let t = setInterval(move, 10);
-  
-    function move(x = 300) {
+    let t = setInterval(function(elem) {
+        // let timePassed = Date.now() - start;
+        // if (timePassed > 12000) {
+        if (++cnt > 1200) {
+            clearInterval(t);
+            return;
+        }
+        move(elem);
+    }, 10, box);
+
+    function move(elem, x = 300) {
         if(posX >= 0 && posX < x && posY <= 0) {
             posX++;
         } else if(posX >= x && posY < x && posY >= 0) {
@@ -35,10 +49,10 @@ function myAmimation () {
         } else if(posX <= 0 && posY <= x && posY > 0) {
             posY--;
         }
-        box.style.left = posX +'px';
-        box.style.top = posY +'px';
-    }    
-}    
+        elem.style.left = posX +'px';
+        elem.style.top = posY +'px';
+    } 
+}   
 
 btn.addEventListener('click', myAmimation);
 
