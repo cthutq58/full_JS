@@ -1,17 +1,16 @@
-body {
-    display: block;
-    margin: 8px;
-}
-
-div {
-    display: block;
-}
-
 .box {
     width: 400px;
-    height: 350px;
+    height: 250px;
     overflow: scroll;
     margin: 0 auto;
     margin-top: 50px;
     padding: 10px;
+}
+
+button{
+    width: 100px;
+    height: 40px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: 20px;
 }
