@@ -3,34 +3,42 @@
 let box = document.querySelector('.box'),
     btn = document.querySelectorAll('button');
 
-// let width = box.clientWidth,
-//     height = box.clientHeight;
-// let width = box.offsetWidth,
-//     height = box.offsetHeight;
-let width = box.scrollWidth,
-    height = box.scrollHeight;
+let clientWidth = box.clientWidth,
+    clientHeight = box.clientHeight,
+    offsetWidth = box.offsetWidth,
+    offsetHeight = box.offsetHeight,
+    scrollWidth = box.scrollWidth,
+    scrollHeight = box.scrollHeight;
 
-console.log(width);
-console.log(height);
+console.log(clientWidth + " " + offsetWidth + ' ' + scrollWidth);
+console.log(clientHeight + " " + offsetHeight + ' ' + scrollHeight);
 
-btn[0].textContent = 'UnScroll';
-let a = 0;
+btn[0].textContent = 'visible';
+btn[1].textContent = 'getScrollTop';
+btn[2].textContent = 'gotoTop';
+
+let a = false,
+    b = (box.offsetHeight + -getComputedStyle(box).padding.slice(0,-2)*2)+ 'px';
+
 btn[0].addEventListener('click', () => {
-    if (!a && (a = getComputedStyle(box).height)) {
+    if ((a = !a)) {
         box.style.height = box.scrollHeight + 'px';
-        btn[0].textContent = 'Scroll';
+        box.style.overflow = 'visible';
+        btn[0].textContent = 'scroll';
     }
     else {
-        box.style.height = a;
-        a = 0;
-        btn[0].textContent = 'Un' + btn[0].textContent;
+        box.style.height = b;
+        btn[0].textContent = 'visible';
+        box.style.overflow = 'scroll';
     }
 });
 
 btn[1].addEventListener('click', () => {
-    console.log(box.scrollTop);
+    btn[1].textContent = 'scrollTop: ' + box.scrollTop;
 });
 
-btn[2].addEventListener('click', () => {
+btn[2].addEventListener('click', (e) => {
     box.scrollTop = 0;
+    btn[1].textContent = 'scrollTop: ' + 0;
+    console.log(e.type);
 });

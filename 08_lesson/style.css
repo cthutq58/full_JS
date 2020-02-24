@@ -7,10 +7,9 @@
     padding: 10px;
 }
 
-button{
+button {
     width: 100px;
     height: 40px;
-    display: inline-block;
     margin: 0 auto;
     margin-top: 20px;
 }
