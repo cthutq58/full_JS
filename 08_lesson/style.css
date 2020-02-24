@@ -1,3 +1,7 @@
+body {
+    height: 4000px;    
+}
+
 .box {
     width: 400px;
     height: 250px;
@@ -10,6 +14,13 @@
 button {
     width: 100px;
     height: 40px;
+    display: inline;
     margin: 0 auto;
     margin-top: 20px;
+}
+
+.btn {
+    position: sticky;
+    top: 90%;
+    left: 0%;
 }
